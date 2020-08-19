@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Pokeball from "../pokeball.png";
 
-function Todos({ todos, deleteTodo }) {
-  console.log(todos, deleteTodo);
+function Todos({ todos }) {
   const todosList = todos.length ? (
     todos.map((todo) => {
       return (
@@ -11,7 +10,7 @@ function Todos({ todos, deleteTodo }) {
           <img src={Pokeball} alt="todimage" />
           <div className="collection-item">
             <Link to={"/" + todo.id}>
-              <span onClick={() => deleteTodo(todo.id)}>{todo.title}</span>
+              <span>{todo.title}</span>
             </Link>
             <p>{todo.body}</p>
           </div>
