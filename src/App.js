@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { connect } from "react-redux";
 import Todos from "./components/Todos";
 import AddTodo from "./components/AddTodo";
 import Nav from "./components/layout/Nav";
 import Contact from "./components/layout/Contact";
 import About from "./components/layout/About";
+import Do from "./components/Do";
 
-function App() {
-  const [todos, settodos] = useState([
-    { id: 1, content: "Buy Food" },
-    { id: 2, content: "Cook Food" },
-  ]);
+function App({ posts }) {
+  console.log(posts);
+  const [todos, settodos] = useState(posts);
 
   const deleteTodo = (id) => {
     const newTodos = todos.filter((todo) => {
@@ -23,8 +23,8 @@ function App() {
   const addTodo = (content) => {
     const id = Math.random() * 10000;
     const newTodo = { id, content };
-    // let newAddTods = [...todos, newTodo];
-    // settodos(newAddTods);
+    let newAddTods = [...todos, newTodo];
+    settodos(newAddTods);
     settodos((prev) => {
       return [...prev, newTodo];
     });
@@ -46,9 +46,15 @@ function App() {
         />
         <Route path="/about" component={About} />
         <Route path="/contact" component={Contact} />
+        <Route path="/:do_id" component={Do} />
       </div>
     </Router>
   );
 }
+const mapStateToPorps = (state) => {
+  return {
+    posts: state.posts,
+  };
+};
 
-export default App;
+export default connect(mapStateToPorps)(App);
